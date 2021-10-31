@@ -21,7 +21,7 @@ ext.versions = [
         statusbaruitl        : "1.3.0",//沉浸式状态栏
         retrofit2            : "2.3.0",
         fragmentation        : "1.1.3",
-        fastjson             : "1.2.38",
+        fastjson             : "1.1.70.android",
         glide_transformations: "4.1.0",
         glide                : "4.8.0",
         greendao             : "3.0.1",

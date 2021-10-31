@@ -1,7 +1,7 @@
 package com.lege.legebase
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.alibaba.fastjson.JSON
 import com.lege.android.base.PreferencesManager
 import com.lege.android.base.ui.BaseActivity
 import com.lege.android.base.ui.DialogUtil
