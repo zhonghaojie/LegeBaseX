@@ -2,6 +2,7 @@ package com.lege.legebase
 
 import android.os.Bundle
 import com.alibaba.fastjson.JSON
+import com.alibaba.fastjson.JSONArray
 import com.lege.android.base.PreferencesManager
 import com.lege.android.base.ui.BaseActivity
 import com.lege.android.base.ui.DialogUtil
@@ -13,7 +14,6 @@ class MainActivity : BaseActivity() {
         PreferencesManager.init(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         root.setOnClickListener {
 //            DialogUtil.showConfirmDialogForChildrenTomato(this,title="测试dialog",content = "asaaaaaa",onOk = {},onCancel = {})
             DialogUtil.showCustomDialog(this,title="测试dialog",content = "asaaaaaa",onOk = {},onCancel = {})
