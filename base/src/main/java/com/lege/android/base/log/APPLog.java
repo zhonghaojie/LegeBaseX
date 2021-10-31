@@ -1,6 +1,6 @@
 package com.lege.android.base.log;
 
-import com.alibaba.fastjson.JSON;
+import com.google.gson.Gson;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
@@ -19,6 +19,7 @@ public class APPLog {
     private static int mCurrentLevel = LEVEL_V;
     private static final boolean DEBUG = true;
     private static final String TAG = APPLog.class.getSimpleName();
+    private static final Gson gson = new Gson();
 
     public static void init(String tag){
         FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
@@ -31,7 +32,8 @@ public class APPLog {
         if (!DEBUG) {
             return;
         }
-        Logger.json(JSON.toJSONString(obj));
+
+        Logger.json( gson.toJson(obj));
     }
 
     public  static void json(String tag, Object obj) {
@@ -39,7 +41,7 @@ public class APPLog {
             return;
         }
         Logger.t(tag);
-        Logger.json(JSON.toJSONString(obj));
+        Logger.json(gson.toJson(obj));
     }
 
     public  static void json(String tag, String json) {
