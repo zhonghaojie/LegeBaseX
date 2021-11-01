@@ -43,7 +43,7 @@ dependencies {
     //下载框架
     implementation libs.filedownloader
     implementation libs.anko_common
-    api libs.fastjson
+//    api libs.fastjson
     api libs.gson
     //greendao包的导入
     api libs.greendao
