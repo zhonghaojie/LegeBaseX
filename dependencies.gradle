@@ -101,6 +101,7 @@ ext.libs = [
         test_espresso          : "com.android.support.test.espresso:espresso-core:${versions.test_espresso}",
         design                 : 'com.google.android.material:material:1.0.0',
         //第三方
+        fastjson               : "com.alibaba:fastjson:1.2.36",
         frameanimation         : "com.yuyashuai.frameanimation:frameanimation:${versions.frameanimation}",
         swipedel_menu_layout   : "com.github.mcxtzhang:SwipeDelMenuLayout:${versions.swipedel_menu_layout}",
         wheelview              : "com.contrarywind:wheelview:${versions.wheelview}",
