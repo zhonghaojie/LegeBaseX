@@ -25,7 +25,7 @@ class MainActivity : BaseActivity() {
         JavaTest.test();
         val str = "[{\"age\":12,\"name\":\"张三\"},{\"age\":13,\"name\":\"李四\"},{\"age\":14,\"name\":\"王五\"}]"
         val person = "{\"age\":12,\"name\":\"张三\"}"
-        val list = JSON.parseArray<Person>(str)
+        val list = JSON.parseArray<Person>(str,Person::class.java)
         val personObj = JSON.parseObject(person, Person::class.java)
         Log.d("JSON", "")
         root.setOnClickListener {
