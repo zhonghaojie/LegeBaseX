@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -20,17 +21,27 @@ public class JSON {
         return GsonUtils.fromJson(json,clz);
     }
     public static <T> List<T> parseArray(String json,Class<T> cls){
-        Type type = new TypeToken<List<T>>(){}.getType();
-        JsonArray array = JsonParser.parseString(json).getAsJsonArray();
-        List<T> result = new ArrayList<>();
-
-        for (JsonElement element : array) {
-            result.add(GsonUtils.<T>fromJson(element.toString(),cls));
+        if(json == null || json.trim().equals("")){
+            return new ArrayList<>();
         }
-
+        List<T> result = new ArrayList<>();
+        try {
+            Type type = new TypeToken<List<T>>(){}.getType();
+            JsonArray array = JsonParser.parseString(json).getAsJsonArray();
+            for (JsonElement element : array) {
+                result.add(GsonUtils.<T>fromJson(element.toString(),cls));
+            }
+        }catch (JsonSyntaxException e){
+            e.printStackTrace();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return result;
     }
     public static String toJSONString(Object object){
+        if(object == null){
+            return "";
+        }
         return GsonUtils.toJson(object);
     }
 
