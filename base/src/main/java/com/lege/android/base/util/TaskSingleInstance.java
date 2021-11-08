@@ -96,10 +96,11 @@ public class TaskSingleInstance {
         if (!PreferencesManager.getInstance().getIsBindScreen()) {
             return;
         }
+        handler.removeMessages(WHAT_START);
         if (!ThemeAndScreenManager.getInstance().getScreenProtect()) {
             return;
         }
-        handler.removeMessages(WHAT_START);
+
         handler.sendEmptyMessageDelayed(WHAT_START, ThemeAndScreenManager.getInstance().getScreenProtectStartTime() * 60 * 1000);
     }
 
