@@ -76,4 +76,5 @@ dependencies {
     api libs.okhttp311
     api libs.okhttp311_urlconnection
     api libs.recyclerview
+    api 'com.jakewharton.timber:timber:4.7.1'
 }

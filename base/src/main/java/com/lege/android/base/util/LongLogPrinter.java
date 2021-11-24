@@ -1,5 +1,7 @@
 package com.lege.android.base.util;
 
+import timber.log.Timber;
+
 /**
  * Description:
  * Created by loctek on 2021/11/24.
@@ -93,18 +95,19 @@ public class LongLogPrinter {
      * @param msg  信息
      */
     private static void typePrint(Type type, String tag, String msg) {
+        Timber.tag(tag);
         switch (type) {
             case I:
-                android.util.Log.i(tag, msg);
+               Timber.i( msg);
                 break;
             case E:
-                android.util.Log.e(tag, msg);
+               Timber.e( msg);
                 break;
             case W:
-                android.util.Log.w(tag, msg);
+               Timber.w( msg);
                 break;
             case D:
-                android.util.Log.d(tag, msg);
+               Timber.d( msg);
                 break;
         }
     }
