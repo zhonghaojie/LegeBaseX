@@ -11,6 +11,7 @@ import com.lege.android.base.util.JSON
 import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONArray
 import org.json.JSONObject
+import timber.log.Timber
 
 
 class MainActivity : BaseActivity() {
@@ -43,11 +44,12 @@ class MainActivity : BaseActivity() {
             DialogUtil.showCustomDialog(this,title="测试dialog",content = "asaaaaaa",onOk = {},onCancel = {})
 
 
-
-
+            Timber.d("ASASASASASAS")
 
 
         }
 
+        Timber.plant(Timber.DebugTree())
+        Timber.tag("AAASASAS")
     }
 }

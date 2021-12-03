@@ -64,6 +64,7 @@ class BaseRetrofit {
                 .baseUrl(Urls.BASE)
                 //.baseUrl(Urls.TEST_BASE)
                 .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(JSONConverterFactory.create())
                 .build()
             return retrofit
         }
