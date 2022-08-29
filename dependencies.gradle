@@ -67,7 +67,7 @@ ext.versions = [
         frameanimation       : "2.3.5",//用TextureView或SurfaceView 高性能播放帧动画，避免在很多帧的情况下使用AnimationDrawable带来的OOM和卡顿问题。
         banner               : "2.7.4",//轮播组件
         lottie               : "2.7.0",//lottie js动画   勿升级，2.8.0及以上只适用于Android X
-        utilcode             : "1.30.1",//工具类库 https://github.com/Blankj/AndroidUtilCode
+        utilcode             : "1.30.0",//工具类库 https://github.com/Blankj/AndroidUtilCode
         tkrefreshlayout      : "1.0.7",// 支持回弹的下拉刷新控件 https://github.com/lcodecorex/TwinklingRefreshLayout
         viewanimator         : "1.1.0",// 控件动画效果库https://github.com/florent37/ViewAnimator
         swipedel_menu_layout : "V1.3.0"// 左滑菜单 https://github.com/mcxtzhang/SwipeDelMenuLayout/blob/master/README-cn.md
