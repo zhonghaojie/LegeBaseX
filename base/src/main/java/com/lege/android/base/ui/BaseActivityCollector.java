@@ -3,8 +3,8 @@ package com.lege.android.base.ui;
 import android.app.Activity;
 import androidx.annotation.Nullable;
 
-import com.blankj.utilcode.util.ActivityUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,6 +12,7 @@ import java.util.List;
  * Created by loctek on 2020/6/18.
  */
 public class BaseActivityCollector implements IActivityCollector {
+    private List<Activity> activities = new ArrayList<>();
     private static BaseActivityCollector collector = new BaseActivityCollector();
 
     public static BaseActivityCollector getInstance() {
@@ -19,26 +20,34 @@ public class BaseActivityCollector implements IActivityCollector {
     }
 
     public List<Activity> getActivities(){
-        return ActivityUtils.getActivityList();
+        return activities;
     }
 
+    public void addActivity(Activity activity){
+        activities.add(activity);
+    }
+    public void removeActivity(Activity activity){
+        activities.remove(activity);
+    }
     @Override
     @Nullable
     public Activity getTop() {
-        return ActivityUtils.getTopActivity();
+        if(activities.isEmpty()){
+            return null;
+        }
+        return activities.get(activities.size()-1);
     }
 
     @Override
     public boolean isActivityExist(Activity activity) {
-        return ActivityUtils.isActivityAlive(activity);
+        return activities.contains(activity);
     }
 
     @Override
     public Activity findActivityBySimpleName(String name) {
-        List<Activity> list = ActivityUtils.getActivityList();
         Activity aty = null;
-        for (int i = 0; i < list.size(); i++) {
-            aty = list.get(i);
+        for (int i = 0; i < activities.size(); i++) {
+            aty = activities.get(i);
             if (name.equals(aty.getClass().getSimpleName())) {
                 return aty;
             }
@@ -49,31 +58,22 @@ public class BaseActivityCollector implements IActivityCollector {
 
     @Override
     public void finishActivityExcept(String name) {
-        List<Activity> list = ActivityUtils.getActivityList();
         Activity aty = null;
-        for (int i = 0; i < list.size(); i++) {
-            aty = list.get(i);
+        for (int i = 0; i < activities.size(); i++) {
+            aty = activities.get(i);
             if (!name.equals(aty.getClass().getSimpleName())) {
-                ActivityUtils.finishActivity(aty,true);
+                aty.finish();
             }
         }
-//        for (int i = activities.size() - 1; i >= 0; i--) {
-//            activity = activities.get(i);
-//            if (!activity.getClass().getName().equals(name)) {
-//                activity.finish();
-//                Log.i("生命周期", activity.getClass().getSimpleName() + "   finihs");
-//            }
-//        }
     }
 
     @Override
     public void finishActivity(String name) {
-        List<Activity> list = ActivityUtils.getActivityList();
         Activity aty = null;
-        for (int i = 0; i < list.size(); i++) {
-            aty = list.get(i);
+        for (int i = 0; i < activities.size(); i++) {
+            aty = activities.get(i);
             if (name.equals(aty.getClass().getSimpleName())) {
-                ActivityUtils.finishActivity(aty,true);
+                aty.finish();
             }
         }
     }

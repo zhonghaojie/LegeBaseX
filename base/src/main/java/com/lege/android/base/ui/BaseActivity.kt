@@ -35,6 +35,7 @@ open class BaseActivity : SupportActivity(), SwipeBackActivityBase {
     private var mHelper: SwipeBackActivityHelper? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        BaseActivityCollector.getInstance().addActivity(this)
         val mActionBar = supportActionBar
         mActionBar?.hide()
         val decorView = window.decorView
@@ -108,6 +109,7 @@ open class BaseActivity : SupportActivity(), SwipeBackActivityBase {
 
     override fun onDestroy() {
         super.onDestroy()
+        BaseActivityCollector.getInstance().removeActivity(this)
         APPLog.log(BASE_ACTIVITY_TAG, javaClass.simpleName + "   " + "onDestroy")
     }
 

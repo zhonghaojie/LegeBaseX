@@ -31,6 +31,10 @@ android {
         //daoPackage --> dao的包名，包名默认是entity所在的包；
         //targetGenDir --> 生成数据库文件的目录;
     }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
 
 }
 dependencies {
