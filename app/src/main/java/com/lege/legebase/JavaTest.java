@@ -1,10 +1,5 @@
 package com.lege.legebase;
 
-import android.util.Log;
-
-import com.google.gson.JsonObject;
-
-import java.util.List;
 
 /**
  * Description:
@@ -12,5 +7,6 @@ import java.util.List;
  */
 class JavaTest {
     public static void test(){
+
     }
 }

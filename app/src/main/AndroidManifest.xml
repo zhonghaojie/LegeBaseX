@@ -15,6 +15,11 @@
                 <action android:name="android.intent.action.MAIN"/>
             </intent-filter>
         </activity>
+        <receiver android:name=".aaaa">
+            <intent-filter>
+                <action android:name="com.lege.newreminderalarm" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
