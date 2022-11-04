@@ -193,7 +193,7 @@ open class BaseActivity : SupportActivity(), SwipeBackActivityBase {
         Log.e(BASE_ACTIVITY_TAG,"${javaClass.simpleName}  dispatchTouchEvent  ${ev?.action}" )
         if(ev?.action == MotionEvent.ACTION_DOWN){
             Log.e(BASE_ACTIVITY_TAG, javaClass.simpleName + "   " + "ACTION_DOWN   ${ev.y}")
-            if (ev.y < 5f) {
+            if (ev.y < 15f) {
                 val intent = Intent("show.lege.pullbar")
                 intent.putExtra("show.lege.pullbar.x",ev.x)
                 LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
