@@ -116,8 +116,8 @@ open class BaseActivity : SupportActivity(), SwipeBackActivityBase {
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         if ((event?.y?:0f) < 5f) {
-            val intent = Intent("show.lege.statusbar")
-            intent.putExtra("show.lege.statusbar.x",event!!.x)
+            val intent = Intent("show.lege.pullbar")
+            intent.putExtra("show.lege.pullbar.x",event!!.x)
             sendBroadcast(intent)
         }
         return super.onTouchEvent(event)
