@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
@@ -21,7 +22,7 @@ import me.imid.swipebacklayout.lib.Utils
 import me.imid.swipebacklayout.lib.app.SwipeBackActivityBase
 import me.imid.swipebacklayout.lib.app.SwipeBackActivityHelper
 import me.yokeyword.fragmentation.SupportActivity
-
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 
 /**
  * Description:
@@ -114,17 +115,6 @@ open class BaseActivity : SupportActivity(), SwipeBackActivityBase {
     }
 
 
-    override fun onTouchEvent(event: MotionEvent?): Boolean {
-        if(event?.action == MotionEvent.ACTION_DOWN){
-            if ((event?.y?:0f) < 5f) {
-                val intent = Intent("show.lege.pullbar")
-                intent.putExtra("show.lege.pullbar.x",event!!.x)
-                sendBroadcast(intent)
-            }
-        }
-
-        return super.onTouchEvent(event)
-    }
 
     /**
      * 申请指定的权限.
@@ -196,6 +186,16 @@ open class BaseActivity : SupportActivity(), SwipeBackActivityBase {
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+        Log.e(BASE_ACTIVITY_TAG,"${javaClass.simpleName}  onTouchEvent  ${ev?.action}" )
+        if(ev?.action == MotionEvent.ACTION_DOWN){
+            Log.e(BASE_ACTIVITY_TAG, javaClass.simpleName + "   " + "ACTION_DOWN   ${ev.y}")
+            if (ev.y < 5f) {
+                val intent = Intent("show.lege.pullbar")
+                intent.putExtra("show.lege.pullbar.x",ev.x)
+                LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
+                Log.e(BASE_ACTIVITY_TAG,"sendBroadcast " )
+            }
+        }
         if (ThemeAndScreenManager.instance.screenProtect) {
             if (ev.action == MotionEvent.ACTION_UP) {
                 if (needStartProtectCounter()) {
