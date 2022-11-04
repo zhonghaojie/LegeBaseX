@@ -184,9 +184,13 @@ open class BaseActivity : SupportActivity(), SwipeBackActivityBase {
             }
         }
     }
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        Log.e("生命周期","${javaClass.simpleName}  onTouchEvent  ${event?.action}  y = ${event?.y}" )
+        return super.onTouchEvent(event)
 
+    }
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
-        Log.e(BASE_ACTIVITY_TAG,"${javaClass.simpleName}  onTouchEvent  ${ev?.action}" )
+        Log.e(BASE_ACTIVITY_TAG,"${javaClass.simpleName}  dispatchTouchEvent  ${ev?.action}" )
         if(ev?.action == MotionEvent.ACTION_DOWN){
             Log.e(BASE_ACTIVITY_TAG, javaClass.simpleName + "   " + "ACTION_DOWN   ${ev.y}")
             if (ev.y < 5f) {
