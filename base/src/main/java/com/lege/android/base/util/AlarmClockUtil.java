@@ -18,15 +18,15 @@ import java.util.Calendar;
 public class AlarmClockUtil {
 
     //日程闹钟的头部
-    public static String HEAD_SCHEDULE = "99";
+    public static String HEAD_SCHEDULE = "9";
     //提醒闹钟的头部
     public static String HEAD_REMIND = "8";
     //闹钟头部
-    public static String HEAD_ALARM = "77";
+    public static String HEAD_ALARM = "7";
     //通勤闹钟头部
-    public static String HEAD_COMMUTE = "66";
+    public static String HEAD_COMMUTE = "6";
     //新习惯提醒头部
-    public static String HEAD_NEW_REMIND = "55";
+    public static String HEAD_NEW_REMIND = "5";
 
     /**
      * 设置通勤闹钟
@@ -222,7 +222,7 @@ public class AlarmClockUtil {
      */
     public static void setRepeatReminder(Class<? extends BroadcastReceiver> br,Context context,String type, int reminderid, int remindertype, int starthourOfDay, int startminute, int endhourOfDay, int endminute, int interval, String title) {
         String head = HEAD_REMIND;
-        int step = 1000;
+        int step = 100;
         int startTotalMinute = starthourOfDay * 60 + startminute;
         int endTotalMinute = endhourOfDay * 60 + endminute;
         int alarmCount = (endTotalMinute - startTotalMinute) / interval;
@@ -261,7 +261,7 @@ public class AlarmClockUtil {
      */
     public static void setNewRepeatReminder(Class<? extends BroadcastReceiver> br,Context context,String type, int reminderid, int remindertype, int starthourOfDay, int startminute, int endhourOfDay, int endminute, int interval, String title) {
         String head = HEAD_NEW_REMIND;
-        int step = 1000;
+        int step = 100;
         int startTotalMinute = starthourOfDay * 60 + startminute;
         int endTotalMinute = endhourOfDay * 60 + endminute;
         int alarmCount = (endTotalMinute - startTotalMinute) / interval;
@@ -300,7 +300,7 @@ public class AlarmClockUtil {
      */
     public static void setNewReminder(Class<? extends BroadcastReceiver> br,Context context,String type, int reminderid, int remindertype, int hourOfDay, int minute, int i,String title) {
         String head = HEAD_NEW_REMIND;
-        int step = 1000;
+        int step = 100;
             Calendar c = Calendar.getInstance();
             c.setTimeInMillis(System.currentTimeMillis());
             c.set(Calendar.HOUR_OF_DAY, hourOfDay);
@@ -338,7 +338,7 @@ public class AlarmClockUtil {
      * @param interval
      */
     public static void deleteRepeatReminder(Class<? extends BroadcastReceiver> br,Context context, int reminderid, int starthourOfDay, int startminute, int endhourOfDay, int endminute, int interval) {
-        int step = 1000;
+        int step = 100;
         String head = HEAD_REMIND;
         int startTotalMinute = starthourOfDay * 60 + startminute;
         int endTotalMinute = endhourOfDay * 60 + endminute;
@@ -352,7 +352,7 @@ public class AlarmClockUtil {
     }
 
     public static void deleteNewRepeatReminder(Class<? extends BroadcastReceiver> br,Context context, int reminderid, int starthourOfDay, int startminute, int endhourOfDay, int endminute, int interval) {
-        int step = 1000;
+        int step = 100;
         String head = HEAD_NEW_REMIND;
         int startTotalMinute = starthourOfDay * 60 + startminute;
         int endTotalMinute = endhourOfDay * 60 + endminute;
@@ -366,7 +366,7 @@ public class AlarmClockUtil {
     }
 
     public static void deleteNewReminder(Class<? extends BroadcastReceiver> br,Context context, int reminderid, int i) {
-        int step = 1000;
+        int step = 100;
         String head = HEAD_NEW_REMIND;
         int tempcode = reminderid * step + i;
         String requestcode = head + tempcode;
