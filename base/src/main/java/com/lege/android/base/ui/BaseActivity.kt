@@ -39,6 +39,7 @@ open class BaseActivity : SupportActivity(), SwipeBackActivityBase {
         BaseActivityCollector.getInstance().addActivity(this)
         val mActionBar = supportActionBar
         mActionBar?.hide()
+
 //        val decorView = window.decorView
 //        var systemUiVisibility = decorView.systemUiVisibility
 //        val flags = (View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
