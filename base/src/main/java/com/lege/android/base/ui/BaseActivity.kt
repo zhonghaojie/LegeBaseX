@@ -186,16 +186,16 @@ open class BaseActivity : SupportActivity(), SwipeBackActivityBase {
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
-        Log.e(BASE_ACTIVITY_TAG,"${javaClass.simpleName}  onTouchEvent  ${ev?.action}" )
-        if(ev?.action == MotionEvent.ACTION_DOWN){
-            Log.e(BASE_ACTIVITY_TAG, javaClass.simpleName + "   " + "ACTION_DOWN   ${ev.y}")
-            if (ev.y < 5f) {
-                val intent = Intent("show.lege.pullbar")
-                intent.putExtra("show.lege.pullbar.x",ev.x)
-                LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
-                Log.e(BASE_ACTIVITY_TAG,"sendBroadcast " )
-            }
-        }
+//        Log.e(BASE_ACTIVITY_TAG,"${javaClass.simpleName}  onTouchEvent  ${ev?.action}" )
+//        if(ev?.action == MotionEvent.ACTION_DOWN){
+//            Log.e(BASE_ACTIVITY_TAG, javaClass.simpleName + "   " + "ACTION_DOWN   ${ev.y}")
+//            if (ev.y < 5f) {
+//                val intent = Intent("show.lege.pullbar")
+//                intent.putExtra("show.lege.pullbar.x",ev.x)
+//                LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
+//                Log.e(BASE_ACTIVITY_TAG,"sendBroadcast " )
+//            }
+//        }
         if (ThemeAndScreenManager.instance.screenProtect) {
             if (ev.action == MotionEvent.ACTION_UP) {
                 if (needStartProtectCounter()) {
