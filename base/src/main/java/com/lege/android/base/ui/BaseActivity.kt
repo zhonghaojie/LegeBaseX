@@ -51,8 +51,8 @@ open class BaseActivity : SupportActivity(), SwipeBackActivityBase {
         decorView.systemUiVisibility = systemUiVisibility
         window.statusBarColor = Color.TRANSPARENT
         APPLog.log(BASE_ACTIVITY_TAG, javaClass.simpleName + "   " + "onCreate")
-//        mHelper = SwipeBackActivityHelper(this)
-//        mHelper?.onActivityCreate()
+        mHelper = SwipeBackActivityHelper(this)
+        mHelper?.onActivityCreate()
         //打开任何界面都判定为人再跟前，重置检测间隔
         //打开任何界面都判定为人再跟前，重置检测间隔
         if (needStartProtectCounter()) {
