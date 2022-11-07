@@ -22,7 +22,7 @@ import me.imid.swipebacklayout.lib.Utils
 import me.imid.swipebacklayout.lib.app.SwipeBackActivityBase
 import me.imid.swipebacklayout.lib.app.SwipeBackActivityHelper
 import me.yokeyword.fragmentation.SupportActivity
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
+
 
 /**
  * Description:
@@ -34,6 +34,9 @@ open class BaseActivity : SupportActivity(), SwipeBackActivityBase {
     }
 
     private var mHelper: SwipeBackActivityHelper? = null
+    private var isShow = false
+    private var y1 = 0
+    private var y2 = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         BaseActivityCollector.getInstance().addActivity(this)
@@ -47,12 +50,12 @@ open class BaseActivity : SupportActivity(), SwipeBackActivityBase {
                 or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
                 //                 | View.SYSTEM_UI_FLAG_FULLSCREEN       // hide status bar
                 or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
-        systemUiVisibility = systemUiVisibility or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        systemUiVisibility = systemUiVisibility or flags
         decorView.systemUiVisibility = systemUiVisibility
         window.statusBarColor = Color.TRANSPARENT
         APPLog.log(BASE_ACTIVITY_TAG, javaClass.simpleName + "   " + "onCreate")
         mHelper = SwipeBackActivityHelper(this)
-//        mHelper?.onActivityCreate()
+        mHelper?.onActivityCreate()
         //打开任何界面都判定为人再跟前，重置检测间隔
         //打开任何界面都判定为人再跟前，重置检测间隔
         if (needStartProtectCounter()) {
@@ -113,7 +116,6 @@ open class BaseActivity : SupportActivity(), SwipeBackActivityBase {
         BaseActivityCollector.getInstance().removeActivity(this)
         APPLog.log(BASE_ACTIVITY_TAG, javaClass.simpleName + "   " + "onDestroy")
     }
-
 
 
     /**
@@ -186,16 +188,30 @@ open class BaseActivity : SupportActivity(), SwipeBackActivityBase {
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
-//        Log.e(BASE_ACTIVITY_TAG,"${javaClass.simpleName}  onTouchEvent  ${ev?.action}" )
-//        if(ev?.action == MotionEvent.ACTION_DOWN){
-//            Log.e(BASE_ACTIVITY_TAG, javaClass.simpleName + "   " + "ACTION_DOWN   ${ev.y}")
-//            if (ev.y < 5f) {
-//                val intent = Intent("show.lege.pullbar")
-//                intent.putExtra("show.lege.pullbar.x",ev.x)
-//                LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
-//                Log.e(BASE_ACTIVITY_TAG,"sendBroadcast " )
-//            }
-//        }
+        Log.i("lege", "phoneStatusBarView=========onTouch==")
+        when (ev.action) {
+            MotionEvent.ACTION_DOWN -> {
+                isShow = false
+                y1 = ev.y.toInt()
+                if (y1 > 10) {
+                    isShow = true
+                }
+            }
+            MotionEvent.ACTION_MOVE -> {
+                y2 = ev.y.toInt()
+                if (y2 - y1 > 10 && !isShow) {
+                    isShow = true
+                    val sendtoShowView = Intent()
+                    sendtoShowView.putExtra("show.lege.statusbar.x", ev.x)
+                    sendtoShowView.action = "show.lege.statusbar"
+                    sendBroadcast(sendtoShowView)
+                }
+            }
+            MotionEvent.ACTION_UP -> {
+                y1 = 0
+                y2 = 0
+            }
+        }
         if (ThemeAndScreenManager.instance.screenProtect) {
             if (ev.action == MotionEvent.ACTION_UP) {
                 if (needStartProtectCounter()) {
