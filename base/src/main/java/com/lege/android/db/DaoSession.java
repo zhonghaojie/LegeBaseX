@@ -11,6 +11,7 @@ import org.greenrobot.greendao.internal.DaoConfig;
 import com.lege.android.base.db.AlarmUser;
 import com.lege.android.base.db.ArticleHistoryBean;
 import com.lege.android.base.db.AudioRecordUser;
+import com.lege.android.base.db.BindInfo;
 import com.lege.android.base.db.CollectionUser;
 import com.lege.android.base.db.EmailMessageUser;
 import com.lege.android.base.db.EmailUser;
@@ -33,6 +34,7 @@ import com.lege.android.base.db.WeatherUser;
 import com.lege.android.db.AlarmUserDao;
 import com.lege.android.db.ArticleHistoryBeanDao;
 import com.lege.android.db.AudioRecordUserDao;
+import com.lege.android.db.BindInfoDao;
 import com.lege.android.db.CollectionUserDao;
 import com.lege.android.db.EmailMessageUserDao;
 import com.lege.android.db.EmailUserDao;
@@ -64,6 +66,7 @@ public class DaoSession extends AbstractDaoSession {
     private final DaoConfig alarmUserDaoConfig;
     private final DaoConfig articleHistoryBeanDaoConfig;
     private final DaoConfig audioRecordUserDaoConfig;
+    private final DaoConfig bindInfoDaoConfig;
     private final DaoConfig collectionUserDaoConfig;
     private final DaoConfig emailMessageUserDaoConfig;
     private final DaoConfig emailUserDaoConfig;
@@ -86,6 +89,7 @@ public class DaoSession extends AbstractDaoSession {
     private final AlarmUserDao alarmUserDao;
     private final ArticleHistoryBeanDao articleHistoryBeanDao;
     private final AudioRecordUserDao audioRecordUserDao;
+    private final BindInfoDao bindInfoDao;
     private final CollectionUserDao collectionUserDao;
     private final EmailMessageUserDao emailMessageUserDao;
     private final EmailUserDao emailUserDao;
@@ -117,6 +121,9 @@ public class DaoSession extends AbstractDaoSession {
 
         audioRecordUserDaoConfig = daoConfigMap.get(AudioRecordUserDao.class).clone();
         audioRecordUserDaoConfig.initIdentityScope(type);
+
+        bindInfoDaoConfig = daoConfigMap.get(BindInfoDao.class).clone();
+        bindInfoDaoConfig.initIdentityScope(type);
 
         collectionUserDaoConfig = daoConfigMap.get(CollectionUserDao.class).clone();
         collectionUserDaoConfig.initIdentityScope(type);
@@ -175,6 +182,7 @@ public class DaoSession extends AbstractDaoSession {
         alarmUserDao = new AlarmUserDao(alarmUserDaoConfig, this);
         articleHistoryBeanDao = new ArticleHistoryBeanDao(articleHistoryBeanDaoConfig, this);
         audioRecordUserDao = new AudioRecordUserDao(audioRecordUserDaoConfig, this);
+        bindInfoDao = new BindInfoDao(bindInfoDaoConfig, this);
         collectionUserDao = new CollectionUserDao(collectionUserDaoConfig, this);
         emailMessageUserDao = new EmailMessageUserDao(emailMessageUserDaoConfig, this);
         emailUserDao = new EmailUserDao(emailUserDaoConfig, this);
@@ -197,6 +205,7 @@ public class DaoSession extends AbstractDaoSession {
         registerDao(AlarmUser.class, alarmUserDao);
         registerDao(ArticleHistoryBean.class, articleHistoryBeanDao);
         registerDao(AudioRecordUser.class, audioRecordUserDao);
+        registerDao(BindInfo.class, bindInfoDao);
         registerDao(CollectionUser.class, collectionUserDao);
         registerDao(EmailMessageUser.class, emailMessageUserDao);
         registerDao(EmailUser.class, emailUserDao);
@@ -221,6 +230,7 @@ public class DaoSession extends AbstractDaoSession {
         alarmUserDaoConfig.getIdentityScope().clear();
         articleHistoryBeanDaoConfig.getIdentityScope().clear();
         audioRecordUserDaoConfig.getIdentityScope().clear();
+        bindInfoDaoConfig.getIdentityScope().clear();
         collectionUserDaoConfig.getIdentityScope().clear();
         emailMessageUserDaoConfig.getIdentityScope().clear();
         emailUserDaoConfig.getIdentityScope().clear();
@@ -251,6 +261,10 @@ public class DaoSession extends AbstractDaoSession {
 
     public AudioRecordUserDao getAudioRecordUserDao() {
         return audioRecordUserDao;
+    }
+
+    public BindInfoDao getBindInfoDao() {
+        return bindInfoDao;
     }
 
     public CollectionUserDao getCollectionUserDao() {

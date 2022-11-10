@@ -156,6 +156,11 @@ public class DBHelper {
             }
         }
     }
+
+    public List<BindInfo> getBindInfo(){
+        return mDaoSession.getBindInfoDao().loadAll();
+
+    }
     /**
      * 增加通话记录数据
      */

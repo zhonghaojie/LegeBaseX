@@ -2,6 +2,7 @@ package com.lege.android.base.db;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Generated;
 
 @Entity
 public class BindInfo {
@@ -9,6 +10,17 @@ public class BindInfo {
     private Long id;
     private String isBind ;
     private String isPrivacy ;
+
+    @Generated(hash = 1121697647)
+    public BindInfo(Long id, String isBind, String isPrivacy) {
+        this.id = id;
+        this.isBind = isBind;
+        this.isPrivacy = isPrivacy;
+    }
+
+    @Generated(hash = 1845565255)
+    public BindInfo() {
+    }
 
     public Long getId() {
         return id;
