@@ -159,7 +159,9 @@ public class DBHelper {
 
     public List<BindInfo> getBindInfo(){
         return mDaoSession.getBindInfoDao().loadAll();
-
+    }
+    public void addBindInfo(BindInfo bindInfo){
+         mDaoSession.getBindInfoDao().insertOrReplace(bindInfo);
     }
     /**
      * 增加通话记录数据
