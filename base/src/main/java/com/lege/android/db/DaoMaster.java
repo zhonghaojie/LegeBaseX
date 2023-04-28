@@ -17,7 +17,7 @@ import org.greenrobot.greendao.identityscope.IdentityScopeType;
  * Master of DAO (schema version 33): knows all DAOs.
  */
 public class DaoMaster extends AbstractDaoMaster {
-    public static final int SCHEMA_VERSION = 33;
+    public static final int SCHEMA_VERSION = 34;
 
     /** Creates underlying database table using DAOs. */
     public static void createAllTables(Database db, boolean ifNotExists) {
@@ -43,6 +43,7 @@ public class DaoMaster extends AbstractDaoMaster {
         UserDao.createTable(db, ifNotExists);
         WallpaperUserDao.createTable(db, ifNotExists);
         WeatherUserDao.createTable(db, ifNotExists);
+        KugouFavoriteSongDao.createTable(db, ifNotExists);
     }
 
     /** Drops underlying database table using DAOs. */
@@ -69,6 +70,7 @@ public class DaoMaster extends AbstractDaoMaster {
         UserDao.dropTable(db, ifExists);
         WallpaperUserDao.dropTable(db, ifExists);
         WeatherUserDao.dropTable(db, ifExists);
+        KugouFavoriteSongDao.dropTable(db, ifExists);
     }
 
     /**
@@ -109,6 +111,7 @@ public class DaoMaster extends AbstractDaoMaster {
         registerDaoClass(UserDao.class);
         registerDaoClass(WallpaperUserDao.class);
         registerDaoClass(WeatherUserDao.class);
+        registerDaoClass(KugouFavoriteSongDao.class);
     }
 
     public DaoSession newSession() {

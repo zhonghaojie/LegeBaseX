@@ -14,6 +14,7 @@ import com.lege.android.db.DaoSession;
 import com.lege.android.db.EmailMessageUserDao;
 import com.lege.android.db.EmailUserDao;
 import com.lege.android.db.GlobalClockUserDao;
+import com.lege.android.db.KugouFavoriteSongDao;
 import com.lege.android.db.MessageUserDao;
 import com.lege.android.db.MissedCallRecordUserDao;
 import com.lege.android.db.NewRemindUserDao;
@@ -113,13 +114,13 @@ public class DBHelper {
     }
 
 
-
-
     private static DBHelper instance;
     private Application context;
-    public void initContext(Application context){
+
+    public void initContext(Application context) {
         this.context = context;
     }
+
     public static DBHelper getInstance() {
         if (instance == null) {
             instance = new DBHelper();
@@ -129,40 +130,44 @@ public class DBHelper {
 
     private UpgradeTo12 upgradeTo12 = new UpgradeTo12();
 
-    public void addAudioRecord(AudioRecordUser record){
+    public void addAudioRecord(AudioRecordUser record) {
         getAudioRecordDao().insertOrReplace(record);
         long max = System.currentTimeMillis() - 30 * 24 * 60 * 60 * 1000L;
         List<AudioRecordUser> old = getAudioRecordDao().queryBuilder().where(AudioRecordUserDao.Properties.Timestemp.lt(max)).list();
-        if(!old.isEmpty()){
+        if (!old.isEmpty()) {
             removeAudioRecord(old);
         }
     }
-    public List<AudioRecordUser> getAudioRecordInMonth(){
+
+    public List<AudioRecordUser> getAudioRecordInMonth() {
         long max = System.currentTimeMillis() - 30 * 24 * 60 * 60 * 1000L;
         return getAudioRecordDao().queryBuilder().where(AudioRecordUserDao.Properties.Timestemp.ge(max)).orderDesc(AudioRecordUserDao.Properties.Timestemp).list();
     }
 
     //获取过期的录音
-    public List<AudioRecordUser> getOverdueRecord(){
+    public List<AudioRecordUser> getOverdueRecord() {
         long max = System.currentTimeMillis() - 30 * 24 * 60 * 60 * 1000L;
         return getAudioRecordDao().queryBuilder().where(AudioRecordUserDao.Properties.Timestemp.lt(max)).list();
     }
-    public void removeAudioRecord(List<AudioRecordUser> removedList){
+
+    public void removeAudioRecord(List<AudioRecordUser> removedList) {
         for (AudioRecordUser audioRecordUser : removedList) {
             getAudioRecordDao().delete(audioRecordUser);
             File file = new File(audioRecordUser.getPath());
-            if(file.exists()){
+            if (file.exists()) {
                 file.delete();
             }
         }
     }
 
-    public List<BindInfo> getBindInfo(){
+    public List<BindInfo> getBindInfo() {
         return mDaoSession.getBindInfoDao().loadAll();
     }
-    public void addBindInfo(BindInfo bindInfo){
-         mDaoSession.getBindInfoDao().insertOrReplace(bindInfo);
+
+    public void addBindInfo(BindInfo bindInfo) {
+        mDaoSession.getBindInfoDao().insertOrReplace(bindInfo);
     }
+
     /**
      * 增加通话记录数据
      */
@@ -312,9 +317,10 @@ public class DBHelper {
         }
     }
 
-    public AudioRecordUserDao getAudioRecordDao(){
+    public AudioRecordUserDao getAudioRecordDao() {
         return mDaoSession.getAudioRecordUserDao();
     }
+
     /**
      * 获取 getUserDao
      */
@@ -378,7 +384,7 @@ public class DBHelper {
 
         PlanUser planUser = getPlanUserDao().queryBuilder()
                 .where(PlanUserDao.Properties.Taskid.eq(planid)).unique();
-        if(planUser!=null){
+        if (planUser != null) {
             getPlanUserDao().delete(planUser);
             TaskBean task = findTaskByTaskId(planid, TASK_PLAN);
             if (task != null) {
@@ -388,21 +394,22 @@ public class DBHelper {
 
 
     }
+
     /**
      * 删除待办 （进入回收站）
      */
-    public void recyclerTodo(int planid,int isDelete) {
+    public void recyclerTodo(int planid, int isDelete) {
 
         PlanUser planUser = getPlanUserDao().queryBuilder()
                 .where(PlanUserDao.Properties.Taskid.eq(planid)).unique();
-        if(planUser!=null){
+        if (planUser != null) {
             planUser.setIs_delete(isDelete);
             updatePlanUserDate(planUser);
             TaskBean task = findTaskByTaskId(planid, TASK_PLAN);
             if (task != null) {
-                if(isDelete == 1){
+                if (isDelete == 1) {
                     task.setState(TASK_STATE_DEL);
-                }else{
+                } else {
                     task.setDelayAlertTime("");
                     task.setState(TASK_STATE_NORMAL);
                 }
@@ -411,6 +418,7 @@ public class DBHelper {
         }
 
     }
+
     //删除待办
     public void deletePlanUser(PlanUser planUser) {
         getPlanUserDao().delete(planUser);
@@ -419,15 +427,16 @@ public class DBHelper {
             removeTaskBean(task);
         }
     }
+
     //删除/恢复待办（进入回收站）
-    public void deletePlanUser(PlanUser planUser,int isDelete){
+    public void deletePlanUser(PlanUser planUser, int isDelete) {
         planUser.setIs_delete(isDelete);
         updatePlanUserDate(planUser);
         TaskBean task = findTaskByTaskId(planUser.getTaskid(), TASK_PLAN);
         if (task != null) {
-            if(isDelete == 1){
+            if (isDelete == 1) {
                 task.setState(TASK_STATE_DEL);
-            }else{
+            } else {
                 task.setState(TASK_STATE_NORMAL);
             }
             updateTaskBean(task);
@@ -873,7 +882,7 @@ public class DBHelper {
      * 增加EmailMessageUser数据
      */
     public void addEmailMessageUserData(EmailMessageUser user) {
-        APPLog.d("数据库","addEmailMessageUserData");
+        APPLog.d("数据库", "addEmailMessageUserData");
         getEmailMessageUserDao().insertOrReplace(user);
     }
 
@@ -881,7 +890,7 @@ public class DBHelper {
      * 更改Email数据
      */
     public void updateEmailMessageUserData(EmailMessageUser user) {
-        APPLog.d("数据库","updateEmailMessageUserData");
+        APPLog.d("数据库", "updateEmailMessageUserData");
         getEmailMessageUserDao().update(user);
     }
 
@@ -1036,8 +1045,9 @@ public class DBHelper {
             removeTaskBean(taskbean);
         }
     }
+
     //删除日程（进入回收站）
-    public void recycleSchedule(int scheduleId,int isDelete){
+    public void recycleSchedule(int scheduleId, int isDelete) {
         ScheduleUser scheduleUser = getScheduleUserDao().queryBuilder()
                 .where(ScheduleUserDao.Properties.Scheduleid.eq(scheduleId)).unique();
         if (scheduleUser != null) {
@@ -1045,9 +1055,9 @@ public class DBHelper {
             updateScheduleUserData(scheduleUser);
             TaskBean taskbean = findTaskByTaskId(scheduleId, TASK_SCHEDULE);
             if (taskbean != null) {
-                if(isDelete == 1){
+                if (isDelete == 1) {
                     taskbean.setState(TASK_STATE_DEL);
-                }else{
+                } else {
                     taskbean.setDelayAlertTime("");
                     taskbean.setState(TASK_STATE_NORMAL);
                 }
@@ -1056,6 +1066,7 @@ public class DBHelper {
             }
         }
     }
+
     //删除日程
     public void deleteSchedule(ScheduleUser scheduleUser) {
         getScheduleUserDao().delete(scheduleUser);
@@ -1064,20 +1075,22 @@ public class DBHelper {
             removeTaskBean(taskbean);
         }
     }
+
     //    删除日程（进入回收站）
-    public void recycleSchedule(ScheduleUser scheduleUser,int isDelete) {
+    public void recycleSchedule(ScheduleUser scheduleUser, int isDelete) {
         scheduleUser.setIs_delete(isDelete);
         updateScheduleUserData(scheduleUser);
         TaskBean taskbean = findTaskByTaskId(scheduleUser.getScheduleid(), TASK_SCHEDULE);
         if (taskbean != null) {
-            if(isDelete == 1){
+            if (isDelete == 1) {
                 taskbean.setState(TASK_STATE_DEL);
-            }else{
+            } else {
                 taskbean.setState(TASK_STATE_NORMAL);
             }
             updateTaskBean(taskbean);
         }
     }
+
     /**
      * 根据isreminded状态查找ScheduleUser列表数据
      */
@@ -1217,9 +1230,9 @@ public class DBHelper {
     /***
      * 查询未完成任务
      * **/
-    public TaskBean findTaskByNormal(int taskId,String type){
+    public TaskBean findTaskByNormal(int taskId, String type) {
         return getTaskBeanDao().queryBuilder()
-                .where(TaskBeanDao.Properties.TaskId.eq(taskId),TaskBeanDao.Properties.State.in(TASK_STATE_NORMAL,TASK_STATE_DELAY), TaskBeanDao.Properties.Type.in(TASK_SCHEDULE,TASK_PLAN)).unique();
+                .where(TaskBeanDao.Properties.TaskId.eq(taskId), TaskBeanDao.Properties.State.in(TASK_STATE_NORMAL, TASK_STATE_DELAY), TaskBeanDao.Properties.Type.in(TASK_SCHEDULE, TASK_PLAN)).unique();
 
     }
 
@@ -1288,7 +1301,7 @@ public class DBHelper {
     public List<TaskBean> findTaskTodayBeforeUnexecuted() {
 
         return getTaskBeanDao().queryBuilder()
-                .where(TaskBeanDao.Properties.State.in(TASK_STATE_NORMAL,TASK_STATE_DELAY),
+                .where(TaskBeanDao.Properties.State.in(TASK_STATE_NORMAL, TASK_STATE_DELAY),
                         TaskBeanDao.Properties.IsRead.eq(0),
                         TaskBeanDao.Properties.Datetime.lt(DateFormatUtil.getSystemCurrent_Time2())
                 ).orderAsc(TaskBeanDao.Properties.Datetime)
@@ -1613,7 +1626,7 @@ public class DBHelper {
                 .where(MissedCallRecordUserDao.Properties.Employee.eq(user.getEmployee()),
                         MissedCallRecordUserDao.Properties.Readed.eq("no")).unique();
         if (missedCallRecordUser != null) {
-            missedCallRecordUser.setCount(missedCallRecordUser.getCount()+1);
+            missedCallRecordUser.setCount(missedCallRecordUser.getCount() + 1);
             missedCallRecordUser.setInsertiontime(user.getInsertiontime());
             getMissedCallRecordUserDao().update(missedCallRecordUser);
         } else {
@@ -1665,21 +1678,47 @@ public class DBHelper {
      * 增加资源库
      */
     public List<RecentlyPlayedUser> getRecentlyPlayedUserList() {
-        return   getRecentlyPlayedUserDao().queryBuilder().orderDesc(RecentlyPlayedUserDao.Properties.Id).list();
+        return getRecentlyPlayedUserDao().queryBuilder().orderDesc(RecentlyPlayedUserDao.Properties.Id).list();
     }
+
     /**
      * 增加资源库最近播放
      */
     public void addRecentlyPlayedUser(RecentlyPlayedUser user) {
-        RecentlyPlayedUser recentlyPlayedUser= getRecentlyPlayedUserDao().queryBuilder().
+        RecentlyPlayedUser recentlyPlayedUser = getRecentlyPlayedUserDao().queryBuilder().
                 where(RecentlyPlayedUserDao.Properties.Uid.eq(user.getUid())).unique();
-        if (recentlyPlayedUser!=null){
+        if (recentlyPlayedUser != null) {
             getRecentlyPlayedUserDao().delete(recentlyPlayedUser);
         }
-        long count=getRecentlyPlayedUserDao().queryBuilder().count();
-        if (count>49){
+        long count = getRecentlyPlayedUserDao().queryBuilder().count();
+        if (count > 49) {
             getRecentlyPlayedUserDao().delete(getRecentlyPlayedUserDao().queryBuilder().limit(1).unique());
         }
         getRecentlyPlayedUserDao().insert(user);
+    }
+
+    public KugouFavoriteSongDao getKugouFavoriteSongDao() {
+        return mDaoSession.getKugouFavoriteSongDao();
+    }
+
+    public boolean kugouFavoriteSongExists(String songId) {
+        KugouFavoriteSong song = getKugouFavoriteSongDao().load(songId);
+        return song != null;
+    }
+
+    public void addKugouFavoriteSong(List<KugouFavoriteSong> list) {
+        getKugouFavoriteSongDao().insertOrReplaceInTx(list);
+    }
+
+    public void addKugouFavoriteSong(KugouFavoriteSong song) {
+        getKugouFavoriteSongDao().insertOrReplaceInTx(song);
+    }
+
+    public void deleteKugouFavoriteSongBySongId(String songId) {
+        getKugouFavoriteSongDao().deleteByKeyInTx(songId);
+    }
+
+    public void deleteAllKugouFavoriteSong() {
+        getKugouFavoriteSongDao().deleteAll();
     }
 }

@@ -16,6 +16,7 @@ import com.lege.android.base.db.CollectionUser;
 import com.lege.android.base.db.EmailMessageUser;
 import com.lege.android.base.db.EmailUser;
 import com.lege.android.base.db.GlobalClockUser;
+import com.lege.android.base.db.KugouFavoriteSong;
 import com.lege.android.base.db.MessageUser;
 import com.lege.android.base.db.MissedCallRecordUser;
 import com.lege.android.base.db.NewRemindUser;
@@ -85,6 +86,7 @@ public class DaoSession extends AbstractDaoSession {
     private final DaoConfig userDaoConfig;
     private final DaoConfig wallpaperUserDaoConfig;
     private final DaoConfig weatherUserDaoConfig;
+    private final DaoConfig kugouFavoriteSongDaoConfig;
 
     private final AlarmUserDao alarmUserDao;
     private final ArticleHistoryBeanDao articleHistoryBeanDao;
@@ -108,6 +110,7 @@ public class DaoSession extends AbstractDaoSession {
     private final UserDao userDao;
     private final WallpaperUserDao wallpaperUserDao;
     private final WeatherUserDao weatherUserDao;
+    private final KugouFavoriteSongDao kugouFavoriteSongDao;
 
     public DaoSession(Database db, IdentityScopeType type, Map<Class<? extends AbstractDao<?, ?>>, DaoConfig>
             daoConfigMap) {
@@ -179,6 +182,9 @@ public class DaoSession extends AbstractDaoSession {
         weatherUserDaoConfig = daoConfigMap.get(WeatherUserDao.class).clone();
         weatherUserDaoConfig.initIdentityScope(type);
 
+        kugouFavoriteSongDaoConfig = daoConfigMap.get(KugouFavoriteSongDao.class).clone();
+        kugouFavoriteSongDaoConfig.initIdentityScope(type);
+
         alarmUserDao = new AlarmUserDao(alarmUserDaoConfig, this);
         articleHistoryBeanDao = new ArticleHistoryBeanDao(articleHistoryBeanDaoConfig, this);
         audioRecordUserDao = new AudioRecordUserDao(audioRecordUserDaoConfig, this);
@@ -201,6 +207,7 @@ public class DaoSession extends AbstractDaoSession {
         userDao = new UserDao(userDaoConfig, this);
         wallpaperUserDao = new WallpaperUserDao(wallpaperUserDaoConfig, this);
         weatherUserDao = new WeatherUserDao(weatherUserDaoConfig, this);
+        kugouFavoriteSongDao = new KugouFavoriteSongDao(kugouFavoriteSongDaoConfig, this);
 
         registerDao(AlarmUser.class, alarmUserDao);
         registerDao(ArticleHistoryBean.class, articleHistoryBeanDao);
@@ -224,6 +231,7 @@ public class DaoSession extends AbstractDaoSession {
         registerDao(User.class, userDao);
         registerDao(WallpaperUser.class, wallpaperUserDao);
         registerDao(WeatherUser.class, weatherUserDao);
+        registerDao(KugouFavoriteSong.class, kugouFavoriteSongDao);
     }
     
     public void clear() {
@@ -249,6 +257,7 @@ public class DaoSession extends AbstractDaoSession {
         userDaoConfig.getIdentityScope().clear();
         wallpaperUserDaoConfig.getIdentityScope().clear();
         weatherUserDaoConfig.getIdentityScope().clear();
+        kugouFavoriteSongDaoConfig.getIdentityScope().clear();
     }
 
     public AlarmUserDao getAlarmUserDao() {
@@ -339,4 +348,7 @@ public class DaoSession extends AbstractDaoSession {
         return weatherUserDao;
     }
 
+    public KugouFavoriteSongDao getKugouFavoriteSongDao() {
+        return kugouFavoriteSongDao;
+    }
 }
