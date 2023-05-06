@@ -5,7 +5,7 @@ package com.lege.android.base.retrofit;
  * Created by zhonghaojie on 2019-07-02.
  */
 public class Urls {
-    public  static String BASE="https://sit-screen.loctek.com/api/";
+    public  static String BASE="https://echo-office.loctek.com/api";
     public  static String TEST_BASE="http://echo-test.loctek.com/api/";
     public static String CALENDAR = BASE+"get/calendar";
     public static String DEVICE_ONLINE = BASE+"device/online";
