@@ -855,7 +855,8 @@ class DaoMasterHelper(context: Context, name: String, factory: SQLiteDatabase.Cu
                     AudioRecordUserDao::class.java,
                     RecentlyPlayedUserDao::class.java,
                     NewRemindUserDao::class.java,
-                    BindInfoDao::class.java
+                    BindInfoDao::class.java,
+                    KugouFavoriteSongDao::class.java
                 )
             }
         }
